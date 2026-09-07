@@ -18,9 +18,8 @@ EXPECTED_SCRIPTS = [
 ]
 
 OVERRIDES = """
-/* Studio owns the surrounding heading, content width, and section spacing. */
+/* The embed owns the Technology heading; Studio owns width and outer spacing. */
 #pb-five.technology{max-width:none;width:100%;padding:0;margin:0}
-#pb-five .scene-nav{margin-top:0}
 #pb-five .embed-notes{display:flex;justify-content:flex-end;border-top:1px solid var(--line);margin-top:16px;padding-top:8px}
 #pb-five .embed-notes .demo-notes{padding-top:0}
 @media(max-width:620px){#pb-five .embed-notes{justify-content:flex-start}}
@@ -42,8 +41,8 @@ def build():
     if names != EXPECTED_SCRIPTS:
         raise ValueError(f"Review changed script order before bundling: {names}")
     body = re.search(r"<body>([\s\S]*?)</body>", original).group(1)
-    body, n = re.subn(r'\s*<header class="section-header">[\s\S]*?</header>', "", body, count=1)
-    assert n == 1, "The native Studio heading must not be duplicated."
+    assert body.count('<header class="section-header">') == 1, "Keep the new Technology heading inside the embed."
+    assert '<h1>Our Technology</h1>' in body and 'class="research-link"' in body
     body, n = re.subn(
         r'<footer class="next-section">\s*<div><h2>Case Study</h2>[\s\S]*?</div></div>',
         '<footer class="embed-notes">', body, count=1,

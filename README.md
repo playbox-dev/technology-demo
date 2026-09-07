@@ -5,9 +5,13 @@ spaces, assembly work and retail. The layout follows 捉える → 理解する 
 
 ## Studio integration
 
-`index.html` is the section-only embed. Keep the native Studio heading and the
-next Our Works section. Add a Blank Embed under the Technology heading, set its
-width to **100%** and desktop height to **700px** (920px content width), then use:
+`index.html` replaces the **entire current Our Technology section**, including
+the old native heading, copy, list and horse visuals. Hide or remove that old
+section. The embed contains the new minimal Our Technology heading, research
+link, five scene tabs and demo. Keep the next native **Our Works** section.
+
+Place a Blank Embed where the old Technology section was, set its width to
+**100%** and desktop height to **780px** (920px content width), then use:
 
 ```html
 <iframe
@@ -19,14 +23,17 @@ width to **100%** and desktop height to **700px** (920px content width), then us
 ></iframe>
 ```
 
-The 700px desktop height includes the collapsed source disclosure. Expanded
-notes can scroll inside the embed. Smaller breakpoints need their own Studio
-height; the current review focuses on desktop.
+The estimated content height at 920px width is about **770px**, including the
+new heading and collapsed source disclosure; 780px is the initial desktop embed
+height for review. The embed has no outer padding. Tabs keep their original
+spacing below the heading: 38px on desktop and 27px on mobile. Expanded notes
+can scroll inside the embed. Smaller breakpoints need their own Studio height;
+the current review focuses on desktop.
 
 ## Updating
 
 - Edit the files in `src/`.
-- Run `python3 scripts/build.py` to regenerate the section-only `index.html`.
+- Run `python3 scripts/build.py` to regenerate the complete Technology-section `index.html`.
 - `preview.html` is the separate full-page concept preview.
 - All code is self-contained. Videos are loaded from their credited source URLs.
 
