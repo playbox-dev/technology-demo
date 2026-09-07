@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Rebuild the self-contained Studio embed without changing the canonical demo.
 
-Run from any directory with Python 3. The original nine scripts retain their
+Run from any directory with Python 3. The original tracking scripts retain their
 order and contents, inside one lexical scope executed after the body markup.
 Remote videos and source/case links retain their original URLs.
 """
@@ -14,7 +14,7 @@ OUTPUT = ROOT / "index.html"
 EXPECTED_SCRIPTS = [
     "data.js", "spatial.js", "alignment-core.js", "football-aligned.js",
     "racing-aligned.js", "spaces-aligned.js", "retail-aligned.js",
-    "work-aligned.js", "app.js",
+    "work-aligned.js", "app.js", "section-ui.js",
 ]
 
 OVERRIDES = """
@@ -22,6 +22,7 @@ OVERRIDES = """
 #pb-five.technology{max-width:none;width:100%;padding:0;margin:0}
 #pb-five .embed-notes{display:flex;justify-content:flex-end;border-top:1px solid var(--line);margin-top:16px;padding-top:8px}
 #pb-five .embed-notes .demo-notes{padding-top:0}
+#pb-five .embed-notes .notes-panel{max-width:100vw}
 @media(max-width:620px){#pb-five .embed-notes{justify-content:flex-start}}
 """
 

@@ -10,31 +10,51 @@ the old native heading, copy, list and horse visuals. Hide or remove that old
 section. The embed contains the new minimal Our Technology heading, research
 link, five scene tabs and demo. Keep the next native **Our Works** section.
 
-Place a Blank Embed where the old Technology section was, set its width to
-**100%** and desktop height to **780px** (920px content width), then use:
+Place a Blank Embed where the old Technology section was and set its width to
+**100%**, with native Studio wrapper height set to **Auto at every breakpoint**.
+Paste the complete iframe from [`studio-embed.html`](./studio-embed.html). Its
+inline CSS gives the iframe a fluid height, including in Studio Live Preview
+where page custom code does not run. A fixed native wrapper height would prevent
+the next section from following this responsive iframe correctly.
+
+The fallback matches this Studio page's measured layout: maximum iframe width
+**920px**, with horizontal section padding of **24px per side at page widths up
+to 540px**, **40px per side from 541–840px**, and **80px per side above 840px**.
+It calculates the resulting iframe width before choosing the desktop or stacked
+height. Update the inline gutter calculation if the Studio layout changes.
+The height includes a small buffer above the measured content in all five scenes.
+
+The embed has no outer padding. Its title and animated red square underline
+match the native Studio section headings. At iframe widths up to **620px**, the
+research link sits below the heading, the source and model stack, and the Apply
+examples become separate rows. These layouts need more height than desktop;
+use the iframe's actual content width when choosing a fallback, rather than the
+outer browser width. The source disclosure opens upward in a scrollable panel
+and does not change the section's height.
+
+For exact automatic sizing on the published Studio page, the optional helper
+below can be added to page custom code. It is provided here but has not yet been
+installed in Studio:
 
 ```html
-<iframe
-  src="https://playbox-dev.github.io/technology-demo/"
-  title="playbox Technology — 捉える・理解する・活かす"
-  allow="autoplay"
-  loading="lazy"
-  style="display:block;width:100%;height:100%;border:0;background:#fff"
-></iframe>
+<script src="https://playbox-dev.github.io/technology-demo/studio-resize.js" defer></script>
 ```
 
-The estimated content height at 920px width is about **770px**, including the
-new heading and collapsed source disclosure; 780px is the initial desktop embed
-height for review. The embed has no outer padding. Tabs keep their original
-spacing below the heading: 38px on desktop and 27px on mobile. Expanded notes
-can scroll inside the embed. Smaller breakpoints need their own Studio height;
-the current review focuses on desktop.
+`src/section-ui.js` observes the demo's size and sends only its height to its
+parent. `studio-resize.js` accepts messages only from this demo's origin and
+matching iframe within `#technology`, then resizes the iframe and its native
+`div.frame.sd` wrapper. It checks height bounds, avoids repeated writes, and
+requests a fresh measurement after loading or replacing an iframe. Studio page
+custom code does not run in Live Preview, so retain a native responsive fallback
+there through `studio-embed.html`. When installed, the JavaScript helper overrides
+the iframe's CSS fallback on the published page.
 
 ## Updating
 
 - Edit the files in `src/`.
 - Run `python3 scripts/build.py` to regenerate the complete Technology-section `index.html`.
 - `preview.html` is the separate full-page concept preview.
+- `studio-embed.html` is the paste-ready responsive Studio iframe.
 - All code is self-contained. Videos are loaded from their credited source URLs.
 
 ## What the tracking represents
