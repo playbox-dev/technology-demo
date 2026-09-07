@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="playboxの視覚知能を、5つのシーンで体験するTechnologyセクションのデモ。">
+  <title>Our Technology — playbox</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./data.js" defer></script>
+  <script src="./spatial.js" defer></script>
+  <script src="./alignment-core.js" defer></script>
+  <script src="./football-aligned.js" defer></script>
+  <script src="./racing-aligned.js" defer></script>
+  <script src="./spaces-aligned.js" defer></script>
+  <script src="./retail-aligned.js" defer></script>
+  <script src="./work-aligned.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main id="pb-five" class="technology">
+    <header class="section-header">
+      <div><h1>Our Technology</h1><div class="dot-rule" aria-hidden="true"></div></div>
+      <a class="research-link" href="https://preview.studio.site/live/p6ao1LJmOR/wp_categories_QHrK8YuM-1/tech-blog" target="_blank" rel="noopener noreferrer">技術・研究について <span aria-hidden="true">→</span></a>
+    </header>
+
+    <nav class="scene-nav" aria-label="シーンを選ぶ">
+      <button type="button" data-scene="football" aria-pressed="true">サッカー</button><span aria-hidden="true">/</span>
+      <button type="button" data-scene="racing" aria-pressed="false">競馬</button><span aria-hidden="true">/</span>
+      <button type="button" data-scene="spaces" aria-pressed="false">空間</button><span aria-hidden="true">/</span>
+      <button type="button" data-scene="work" aria-pressed="false">作業</button><span aria-hidden="true">/</span>
+      <button type="button" data-scene="retail" aria-pressed="false">店舗</button>
+    </nav>
+
+    <section class="scene-content" aria-label="サッカーの映像と中間表現">
+      <div class="view-pair">
+        <figure class="view capture">
+          <figcaption><span>01</span> 捉える <small id="capture-count" class="subject-count"></small></figcaption>
+          <div class="media source-media">
+            <video id="source-video" muted playsinline preload="metadata" aria-label="サッカーの映像"></video>
+            <svg id="source-correspondence" aria-hidden="true"></svg>
+            <div class="media-message" role="status"><span class="loading-dot" aria-hidden="true"></span><span class="message-text">映像を読み込み中</span><button type="button" class="retry" hidden>再読み込み</button></div>
+          </div>
+        </figure>
+        <span class="conversion-arrow" aria-hidden="true">→</span>
+        <figure class="view represent">
+          <figcaption><span>02</span> 理解する <small id="model-count" class="subject-count"></small></figcaption>
+          <div class="media model-media"><svg id="main-model" role="img" aria-label="映像と連動する位置と動きの模式図"></svg></div>
+        </figure>
+      </div>
+      <div class="transport"><button type="button" id="play-toggle" aria-label="映像と図を一時停止" disabled><span class="pause-symbol" aria-hidden="true"></span></button></div>
+
+      <section class="apply" aria-labelledby="apply-title">
+        <h2 id="apply-title"><span>03</span> 活かす</h2>
+        <div class="applications">
+          <article class="application">
+            <div class="application-visual" id="application-one-visual" role="img" aria-label="映像に俯瞰図を添えた観戦体験">
+              <canvas id="apply-source" aria-hidden="true"></canvas>
+              <svg id="apply-one-model" aria-hidden="true"></svg>
+              <div class="work-record" hidden><canvas></canvas><canvas></canvas><canvas></canvas></div>
+            </div>
+            <div class="application-copy"><h3 id="apply-one-title">観戦体験</h3><p id="apply-one-copy">選手の配置も、映像と一緒に。</p></div>
+          </article>
+          <article class="application">
+            <div class="application-visual" id="application-two-visual" role="img" aria-label="動きの軌跡からプレーを振り返る">
+              <svg id="apply-two-model" aria-hidden="true"></svg>
+              <div class="work-search" hidden><button type="button" aria-label="作業の前半を再生"><canvas></canvas></button><button type="button" aria-label="作業の中盤を再生"><canvas></canvas></button><button type="button" aria-label="作業の後半を再生"><canvas></canvas></button></div>
+            </div>
+            <div class="application-copy"><h3 id="apply-two-title">プレー分析</h3><p id="apply-two-copy">動きをたどり、プレーを振り返る。</p></div>
+          </article>
+        </div>
+        <div class="case-link-row"><a id="case-link" href="https://preview.studio.site/live/p6ao1LJmOR/wp_page_kUVmdDuz/mixigame-state-reconstruction" target="_blank" rel="noopener noreferrer">事例を見る <span aria-hidden="true">↗</span></a></div>
+      </section>
+    </section>
+
+    <footer class="next-section">
+      <div><h2>Case Study</h2><p>共創事例</p><div class="dot-rule" aria-hidden="true"></div></div>
+      <details class="demo-notes"><summary>デモについて</summary><p>公開映像に手動で対応づけた再構成デモです。見えている人物・馬・部品と配置を動画時刻に合わせています。奥行き・遮蔽された位置や形は近似を含み、自動推論の結果ではありません。</p><p id="scene-note"></p><a id="source-credit" target="_blank" rel="noopener noreferrer">映像の出典</a></details>
+    </footer>
+    <p class="sr-only" id="scene-announcement" aria-live="polite"></p>
+    <noscript>このデモにはJavaScriptを有効にしてください。</noscript>
+  </main>
+</body>
+</html>
