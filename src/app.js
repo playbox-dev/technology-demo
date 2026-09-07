@@ -6,13 +6,46 @@
   const video=q('#source-video');
   const main=q('#main-model'),one=q('#apply-one-model'),two=q('#apply-two-model');
   const play=q('#play-toggle');
+  const sceneTabs=qa('.scene-nav button[data-scene]');
+  const sceneOrder=sceneTabs.map(button=>button.dataset.scene);
+  const progress=q('#scene-progress');
   const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
   Object.entries(PB5Aligned).forEach(([id,model])=>Object.assign(PB5_DATA[id],{start:model.start,end:model.end,note:model.note}));
   const state={scene:PB5_DATA[location.hash.slice(1)]?location.hash.slice(1):'football',ready:false,wanted:!matchMedia('(prefers-reduced-motion: reduce)').matches,time:0,error:false};
   const hasFrameClock=typeof video.requestVideoFrameCallback==='function';
-  let generation=0,lastTime=-1,lastTick=0,presentedTime=null;
+  let generation=0,lastTime=-1,lastTick=0,presentedTime=null,frameRequest=null,activeTab=null,lastProgressSecond=-1;
   const recordFrames=[null,null,null],recordDistance=[Infinity,Infinity,Infinity];
   const recordTimes=[.18,.92,1.84];
+
+  function showProgress(time){
+    const c=PB5_DATA[state.scene],duration=c.end-c.start;
+    const elapsed=clamp(time-c.start,0,duration),fraction=duration>0?elapsed/duration:0;
+    activeTab?.style.setProperty('--scene-progress',fraction.toFixed(4));
+    root.dataset.progress=fraction.toFixed(4);
+    // Expose elapsed time without announcing every video frame.
+    const second=Math.floor(elapsed);
+    if(second!==lastProgressSecond||fraction===1){
+      lastProgressSecond=second;
+      progress.setAttribute('aria-valuenow',String(Math.round(fraction*100)));
+      progress.setAttribute('aria-valuetext',`${elapsed.toFixed(1)}秒 / ${duration.toFixed(1)}秒`);
+    }
+  }
+
+  function requestFrame(){
+    if(!hasFrameClock||frameRequest!==null)return;
+    const token=generation;
+    frameRequest=video.requestVideoFrameCallback((now,metadata)=>{
+      if(token!==generation)return;
+      frameRequest=null;
+      framePresented(now,metadata);
+    });
+  }
+
+  function advanceScene(){
+    if(!state.ready||!state.wanted||state.error||document.hidden||video.seeking||(!video.ended&&video.paused))return;
+    showProgress(PB5_DATA[state.scene].end);
+    switchScene(sceneOrder[(sceneOrder.indexOf(state.scene)+1)%sceneOrder.length]);
+  }
 
   function paintCorrespondence(snapshot){
     const overlay=q('#source-correspondence'),b=q('.source-media').getBoundingClientRect();
@@ -63,6 +96,7 @@
   function paint(){
     const c=PB5_DATA[state.scene],model=PB5Aligned[state.scene],t=state.ready?clamp(presentedTime??video.currentTime,c.start,c.end):c.start;state.time=t;
     root.dataset.time=t.toFixed(3);
+    showProgress(t);
     if(state.scene==='football'||state.scene==='racing'){
       model.render(main,t);model.render(one,t,{mini:true,flat:true});model.render(two,t,{mini:true,analysis:true});
       if(state.ready)paintVideo(q('#apply-source'));
@@ -91,9 +125,13 @@
   }
   function switchScene(id,force=false){
     if(!PB5_DATA[id]||(!force&&id===state.scene))return;
-    generation++;video.pause();presentedTime=null;state.scene=id;state.ready=false;state.error=false;lastTime=-1;
+    generation++;
+    if(frameRequest!==null){video.cancelVideoFrameCallback(frameRequest);frameRequest=null;}
+    video.pause();presentedTime=null;state.scene=id;state.ready=false;state.error=false;lastTime=-1;lastProgressSecond=-1;
     const c=PB5_DATA[id];root.dataset.scene=id;
-    qa('[data-scene]').filter(b=>b.tagName==='BUTTON').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.scene===id)));
+    sceneTabs.forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.scene===id));b.style.setProperty('--scene-progress','0');});
+    activeTab=sceneTabs.find(b=>b.dataset.scene===id);
+    progress.setAttribute('aria-label',c.label+'の再生時間');
     q('.scene-content').setAttribute('aria-label',c.label+'の映像と中間表現');video.setAttribute('aria-label',c.label+'の実写映像');
     main.setAttribute('aria-label',c.label+'の動きと連動する模式図');
     c.apps.forEach(([title,copy],i)=>{q(i?'#apply-two-title':'#apply-one-title').textContent=title;q(i?'#apply-two-copy':'#apply-one-copy').textContent=copy;q(i?'#application-two-visual':'#application-one-visual').setAttribute('aria-label',title+'：'+copy);});
@@ -107,7 +145,7 @@
     q('#scene-announcement').textContent=c.label+'を表示しました';
     history.replaceState(null,'','#'+id);
     showLoading(true);showTransport();paint();
-    video.muted=true;video.src=c.src;video.load();
+    video.muted=true;video.src=c.src;video.load();requestFrame();
   }
   function onReady(){
     const c=PB5_DATA[state.scene];
@@ -118,8 +156,8 @@
   video.addEventListener('canplay',onReady);video.addEventListener('seeked',onReady);
   video.addEventListener('playing',showTransport);video.addEventListener('pause',showTransport);
   video.addEventListener('error',()=>{state.error=true;state.ready=false;showLoading(true,true);showTransport();});
-  video.addEventListener('ended',()=>{video.currentTime=PB5_DATA[state.scene].start;});
-  qa('button[data-scene]').forEach(b=>b.addEventListener('click',()=>switchScene(b.dataset.scene)));
+  video.addEventListener('ended',()=>{if(video.ended)advanceScene();});
+  sceneTabs.forEach(b=>b.addEventListener('click',()=>switchScene(b.dataset.scene)));
   play.addEventListener('click',()=>{if(video.paused){state.wanted=true;playVideo();}else{state.wanted=false;video.pause();}showTransport();});
   q('.retry').addEventListener('click',()=>switchScene(state.scene,true));
   qa('.work-search button').forEach((b,i)=>b.addEventListener('click',()=>{if(state.scene==='work'&&state.ready){state.wanted=true;video.currentTime=recordTimes[i];}}));
@@ -127,7 +165,7 @@
   window.addEventListener('hashchange',()=>{if(PB5_DATA[location.hash.slice(1)])switchScene(location.hash.slice(1));});
   const observer=new ResizeObserver(()=>paint());[main,one,two,q('#application-one-visual'),q('#application-two-visual')].forEach(el=>observer.observe(el));
   function framePresented(now,metadata){
-    video.requestVideoFrameCallback(framePresented);
+    requestFrame();
     presentedTime=metadata.mediaTime;
     root.dataset.frameTime=presentedTime.toFixed(5);
     if(state.ready&&!document.hidden){
@@ -135,19 +173,19 @@
       const c=PB5_DATA[state.scene];
       const fps={football:25,racing:25,spaces:10,retail:7,work:30}[state.scene];
       const lastFrame=Math.floor((c.end+1e-6)*fps)/fps;
-      if(!video.paused&&!video.seeking&&presentedTime>=lastFrame-1e-5)video.currentTime=c.start;
+      if(!video.paused&&!video.seeking&&presentedTime>=lastFrame-1e-5)advanceScene();
     }
   }
   function animate(now){
     if(root.isConnected&&now-lastTick>=40&&!document.hidden){
       lastTick=now;const c=PB5_DATA[state.scene];
       if(state.ready&&!video.seeking){
-        if(!video.paused&&video.currentTime>=c.end-.02)video.currentTime=c.start;
+        if(!video.paused&&video.currentTime>=c.end-.02)advanceScene();
         else if(Math.abs(video.currentTime-lastTime)>.006){lastTime=video.currentTime;paint();}
       }
     }
     requestAnimationFrame(animate);
   }
   switchScene(state.scene,true);
-  if(hasFrameClock)video.requestVideoFrameCallback(framePresented);else requestAnimationFrame(animate);
+  if(!hasFrameClock)requestAnimationFrame(animate);
 })();

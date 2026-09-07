@@ -3,6 +3,12 @@
 Five synchronized examples for the playbox Studio website: soccer, horse racing,
 spaces, assembly work and retail. The layout follows 捉える → 理解する → 活かす.
 
+The active scene tab has a red playback progress bar driven by the synchronized
+clip time. At the end of each clip, playback advances in tab order: soccer →
+horse racing → spaces → assembly work → retail → soccer. Manual selection resets
+the new scene’s progress. Pausing freezes both playback and progress; switching
+tabs while paused preserves that choice. Reduced-motion users start paused.
+
 ## Studio integration
 
 `index.html` replaces the **entire current Our Technology section**, including
