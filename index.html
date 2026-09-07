@@ -111,7 +111,7 @@
     </section>
 
     <footer class="embed-notes">
-      <details class="demo-notes"><summary>デモについて</summary><div class="notes-panel"><p>公開映像に手動で対応づけた再構成デモです。見えている人物・馬・部品と配置を動画時刻に合わせています。奥行き・遮蔽された位置や形は近似を含み、自動推論の結果ではありません。</p><p id="scene-note"></p><a id="source-credit" target="_blank" rel="noopener noreferrer">映像の出典</a></div></details>
+      <details class="demo-notes"><summary>デモについて</summary><div class="notes-panel"><p>公開映像をもとに、AIと画像処理で事前に再構成したデータを同期表示しています。位置・形状には説明用の近似を含みます。</p><p id="scene-note"></p><a id="source-credit" target="_blank" rel="noopener noreferrer">映像の出典</a></div></details>
     </footer>
     <p class="sr-only" id="scene-announcement" aria-live="polite"></p>
     <noscript>このデモにはJavaScriptを有効にしてください。</noscript>
@@ -399,7 +399,7 @@ const PB5AlignmentCore = (() => {
     g.add(`<circle data-ball="true" cx="${n(bx)}" cy="${n(by)}" r="${mini?1.15:1.8}" fill="#1c251d" stroke="#fff" stroke-width=".55"/>`);
     g.finish();
   }
-  PB5Aligned.football={start:0,end:4.8,at,render,note:'映像内の選手・審判の足元を手動で対応づけ、ピッチ線からパンとズームを補正した説明用の再構成です。画面外の人物は追加していません。自動推論の結果ではありません。'};
+  PB5Aligned.football={start:0,end:4.8,at,render,note:'映像内の選手・審判の足元を対応づけ、画像処理による追跡とピッチ線に基づくカメラ補正を組み合わせています。映像内で見える人物を対象に、動きと配置を再構成しています。'};
 })();
 
 ;
@@ -550,7 +550,7 @@ PB5Aligned.racing = (() => {
     g.finish();
   }
   return {start,end,at,render,
-    note:'実映像の14頭を手動で対応付け。遮蔽区間は補間。背景の移動を補正した概念座標と、映像で確認した約0.48秒の周期による走行表現です。実測の速度・距離・骨格推定ではありません。'};
+    note:'実映像の14頭を対応づけ、背景の移動を補正して走行を再構成しています。遮蔽区間は補間し、走行アニメーションには映像で確認した約0.48秒の周期を使用しています。距離・速度・骨格は説明用の模式表現です。'};
 })();
 
 ;
@@ -718,7 +718,7 @@ PB5Aligned.spaces = (() => {
   }
   return {
     start, end, at, render,
-    note: '映像内で見える全員を手動で対応づけています。7→6→7→6→7人と変化し、画面外の同一性は判断せず9つの連続トラックに分けています。外構と足元は同じ近似射影で対応。外周はカメラの視野で、敷地境界ではありません。建物の奥行き・高さは模式表現で、実測やAIの推論結果ではありません。',
+    note: '映像内で見える人物を9つの連続トラックとして対応づけ、出入りによる人数の変化を反映しています。外構と足元は共通の射影変換を使用。外周はカメラの視野を表し、建物の奥行き・高さは説明用に近似しています。',
     evidence: { frameRate:10, checkedFrames:34, sourceSize, tracks, outlines,
       homography:[12,16,192,0,30,0,0,1,300],
       visibilityChanges:[[20.2774,7],[21.3,6],[21.8,7],[22.2,6],[22.5,7]] }
@@ -835,7 +835,7 @@ PB5Aligned.spaces = (() => {
     objects.sort((a,b)=>a.d-b.d).forEach(o=>g.add(o.markup));g.finish();
   }
   PB5Aligned.retail={start:0,end:6.047639,at,render,ground,annotations,banks,shelves,
-    note:'映像に見える全8人の連続トラックを手動で照合。陳列棚に完全に隠れる区間は表示を止め、再び見える時点で同じトラックを再開しています。レジ4列（左端を含む）・棚・カートと人物は共通の地面変換を使用。奥行きと遮蔽された足元は単眼映像からの近似です。'};
+    note:'映像に見える全8人の連続トラックを照合。陳列棚に完全に隠れる区間は表示を止め、再び見える時点で同じトラックを再開しています。レジ4列（左端を含む）・棚・カートと人物は共通の地面変換を使用。奥行きと遮蔽された足元は単眼映像からの近似です。'};
 })();
 
 ;
@@ -938,7 +938,7 @@ PB5Aligned.work = (() => {
     g.add(`<circle cx="${cp[0].toFixed(2)}" cy="${cp[1].toFixed(2)}" r="2.6" fill="#ff3110" stroke="#fff" stroke-width=".8"/>`);
     g.finish('</g>');
   }
-  return {start:.04,end:1.966666,at,render,note:'実際のRGB映像の白い穴あきフレーム、赤い留め具、車輪、机上の部品を対応づけています。留め具とナットの位置から組立品の動きを、接触点から手の動きを合わせた手動再構成です。手の奥行き・隠れた部品の形は推定で、作業完了や3D姿勢の自動推論ではありません。'};
+  return {start:.04,end:1.966666,at,render,note:'実映像のフレーム、留め具、車輪、机上の部品を対応づけ、留め具とナットの位置から組立品の動きを、接触点から手の動きを再構成しています。手の奥行きや隠れた部品の形は、説明用に近似しています。'};
 })();
 
 ;

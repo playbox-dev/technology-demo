@@ -62,5 +62,5 @@
     g.add(`<circle data-ball="true" cx="${n(bx)}" cy="${n(by)}" r="${mini?1.15:1.8}" fill="#1c251d" stroke="#fff" stroke-width=".55"/>`);
     g.finish();
   }
-  PB5Aligned.football={start:0,end:4.8,at,render,note:'映像内の選手・審判の足元を手動で対応づけ、ピッチ線からパンとズームを補正した説明用の再構成です。画面外の人物は追加していません。自動推論の結果ではありません。'};
+  PB5Aligned.football={start:0,end:4.8,at,render,note:'映像内の選手・審判の足元を対応づけ、画像処理による追跡とピッチ線に基づくカメラ補正を組み合わせています。映像内で見える人物を対象に、動きと配置を再構成しています。'};
 })();

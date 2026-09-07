@@ -65,8 +65,8 @@ the iframe's CSS fallback on the published page.
 
 ## What the tracking represents
 
-This is a manually aligned demonstration, not a live tracking product.
-Visual annotations establish identities, foot positions, scene landmarks and
+This demonstration synchronizes prepared reconstructions with source footage.
+AI-assisted visual annotation establishes identities, foot positions, scene landmarks and
 object layouts. Image-processing helpers propagate and refine selected tracks;
 soccer uses bidirectional Lucas–Kanade optical flow and pitch calibration.
 The runtime renders prepared coordinates at each displayed video frame's
