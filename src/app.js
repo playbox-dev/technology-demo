@@ -3,7 +3,7 @@
   const root=document.getElementById('pb-five');
   const q=s=>root.querySelector(s);
   const qa=s=>Array.from(root.querySelectorAll(s));
-  const siteOrigin=(root.dataset.siteOrigin||'https://playbox-dev.studio.site').replace(/\/+$/,'');
+  const siteOrigin=(root.dataset.siteOrigin||'https://playbox.co.jp').replace(/\/+$/,'');
   q('.research-link').href=siteOrigin+'/wp_categories_QHrK8YuM-1/tech-blog';
   const video=q('#source-video');
   const main=q('#main-model'),one=q('#apply-one-model'),two=q('#apply-two-model');

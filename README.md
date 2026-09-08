@@ -64,13 +64,13 @@ the iframe's CSS fallback on the published page.
 - All code is self-contained. Videos are loaded from their credited source URLs.
 
 Website links use the `data-site-origin` setting on `#pb-five` in
-`src/index.html`, currently `https://playbox-dev.studio.site`. Research and case
+`src/index.html`, currently `https://playbox.co.jp`. Research and case
 links open the parent page through `target="_top"`; source credits still open a
 separate tab. Soccer links to the published MIXI case. The remaining scenes link
 to the Works index until their individual case pages are published.
 
-When the website moves to its final domain, update `data-site-origin` and the two
-static fallback links in `src/index.html`, then rebuild. Keep the separate
+To change the website origin, update `data-site-origin` and the two static links
+in `src/index.html`, plus the fallback in `src/app.js`, then rebuild. Keep the separate
 `preview.html` concept's setting and fallback links aligned as well.
 
 ## What the tracking represents
