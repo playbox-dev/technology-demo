@@ -18,7 +18,7 @@ const PB5_DATA = {
     src:'https://cdn.jsdelivr.net/gh/martinezpenya/ModelosIA@bc7dfeb0944edf621ed83f80748eeecba86be0be/docs/UD04/notebooks/EX1.-vtest.mp4',
     source:'https://github.com/martinezpenya/ModelosIA/blob/main/docs/UD04/notebooks/EX1.-vtest.mp4',credit:'OpenCV vtest / ModelosIA',
     note:'固定カメラの公開サンプルから3人を選択。外構と座標は模式表現で、清水建設の実際の映像・設備ではありません。',
-    case:'shimz',apps:[['空調の調整','人のいる場所に合わせて。'],['配置の見直し','空間の使われ方に合わせて。']],
+    apps:[['空調の調整','人のいる場所に合わせて。'],['配置の見直し','空間の使われ方に合わせて。']],
     frames:[
       {t:20.2774,P02:[29.4,44.8],P03:[64.2,38.7],P04:[84.4,64.2]},
       {t:21.0724,P02:[22.1,43.8],P03:[58.4,39.5],P04:[88,70]},
@@ -32,7 +32,7 @@ const PB5_DATA = {
     src:'https://cdn.jsdelivr.net/gh/TimSchoonbeek/timschoonbeek.github.io@80412a16c65633a5b7996e7fba391628139f9d84/publications/industreal_teaser.mp4',
     source:'https://data.4tu.nl/datasets/b008dd74-020d-4ea4-a8ba-7bb60769d224',credit:'IndustReal / Schoonbeek et al. · Apache-2.0',
     note:'冒頭の約2秒、上段のRGB映像を使用。手と部品の接触位置に合わせた模式表現で、作業完了の判定は行っていません。',
-    case:'thinklet',apps:[['作業記録','作業の流れを、見返せる記録に。'],['映像検索','見たい作業から、映像を探す。']],
+    apps:[['作業記録','作業の流れを、見返せる記録に。'],['映像検索','見たい作業から、映像を探す。']],
     frames:[{t:.09,point:[.477,.618]},{t:.94,point:[.454,.672]},{t:1.98,point:[.448,.747]}]
   },
   racing: {

@@ -22,10 +22,10 @@
 </style>
 </head>
 <body>
-  <main id="pb-five" class="technology">
+  <main id="pb-five" class="technology" data-site-origin="https://playbox-dev.studio.site">
     <header class="section-header">
       <div><h1>Our Technology</h1><div class="dot-rule" aria-hidden="true"></div></div>
-      <a class="research-link" href="https://preview.studio.site/live/p6ao1LJmOR/wp_categories_QHrK8YuM-1/tech-blog" target="_blank" rel="noopener noreferrer">技術・研究について <span aria-hidden="true">→</span></a>
+      <a class="research-link" href="https://playbox-dev.studio.site/wp_categories_QHrK8YuM-1/tech-blog" target="_top">技術・研究について <span aria-hidden="true">→</span></a>
     </header>
 
     <nav class="scene-nav" aria-label="シーンを選ぶ">
@@ -73,7 +73,7 @@
             <div class="application-copy"><h3 id="apply-two-title">プレー分析</h3><p id="apply-two-copy">動きをたどり、プレーを振り返る。</p></div>
           </article>
         </div>
-        <div class="case-link-row"><a id="case-link" href="https://preview.studio.site/live/p6ao1LJmOR/wp_page_kUVmdDuz/mixigame-state-reconstruction" target="_blank" rel="noopener noreferrer">事例を見る <span aria-hidden="true">↗</span></a></div>
+        <div class="case-link-row"><a id="case-link" href="https://playbox-dev.studio.site/wp_page_kUVmdDuz/mixigame-state-reconstruction" target="_top">事例を見る <span aria-hidden="true">→</span></a></div>
       </section>
     </section>
 
@@ -105,7 +105,7 @@ const PB5_DATA = {
     src:'https://cdn.jsdelivr.net/gh/martinezpenya/ModelosIA@bc7dfeb0944edf621ed83f80748eeecba86be0be/docs/UD04/notebooks/EX1.-vtest.mp4',
     source:'https://github.com/martinezpenya/ModelosIA/blob/main/docs/UD04/notebooks/EX1.-vtest.mp4',credit:'OpenCV vtest / ModelosIA',
     note:'固定カメラの公開サンプルから3人を選択。外構と座標は模式表現で、清水建設の実際の映像・設備ではありません。',
-    case:'shimz',apps:[['空調の調整','人のいる場所に合わせて。'],['配置の見直し','空間の使われ方に合わせて。']],
+    apps:[['空調の調整','人のいる場所に合わせて。'],['配置の見直し','空間の使われ方に合わせて。']],
     frames:[
       {t:20.2774,P02:[29.4,44.8],P03:[64.2,38.7],P04:[84.4,64.2]},
       {t:21.0724,P02:[22.1,43.8],P03:[58.4,39.5],P04:[88,70]},
@@ -119,7 +119,7 @@ const PB5_DATA = {
     src:'https://cdn.jsdelivr.net/gh/TimSchoonbeek/timschoonbeek.github.io@80412a16c65633a5b7996e7fba391628139f9d84/publications/industreal_teaser.mp4',
     source:'https://data.4tu.nl/datasets/b008dd74-020d-4ea4-a8ba-7bb60769d224',credit:'IndustReal / Schoonbeek et al. · Apache-2.0',
     note:'冒頭の約2秒、上段のRGB映像を使用。手と部品の接触位置に合わせた模式表現で、作業完了の判定は行っていません。',
-    case:'thinklet',apps:[['作業記録','作業の流れを、見返せる記録に。'],['映像検索','見たい作業から、映像を探す。']],
+    apps:[['作業記録','作業の流れを、見返せる記録に。'],['映像検索','見たい作業から、映像を探す。']],
     frames:[{t:.09,point:[.477,.618]},{t:.94,point:[.454,.672]},{t:1.98,point:[.448,.747]}]
   },
   racing: {
@@ -902,6 +902,8 @@ PB5Aligned.work = (() => {
   const root=document.getElementById('pb-five');
   const q=s=>root.querySelector(s);
   const qa=s=>Array.from(root.querySelectorAll(s));
+  const siteOrigin=(root.dataset.siteOrigin||'https://playbox-dev.studio.site').replace(/\/+$/,'');
+  q('.research-link').href=siteOrigin+'/wp_categories_QHrK8YuM-1/tech-blog';
   const video=q('#source-video');
   const main=q('#main-model'),one=q('#apply-one-model'),two=q('#apply-two-model');
   const play=q('#play-toggle');
@@ -1000,7 +1002,7 @@ PB5Aligned.work = (() => {
     q('#application-one-visual').classList.toggle('has-video',isVideo);q('#apply-source').hidden=!isVideo;one.toggleAttribute('hidden',isWork);two.toggleAttribute('hidden',isWork);
     q('.work-record').hidden=!isWork;q('.work-search').hidden=!isWork;
     q('#application-two-visual').setAttribute('role',isWork?'group':'img');
-    q('#case-link').href=c.case?'https://preview.studio.site/live/p6ao1LJmOR/wp_page_kUVmdDuz/'+c.case:'https://preview.studio.site/live/p6ao1LJmOR/mX5DfXca/teL1sPH3';
+    q('#case-link').href=siteOrigin+(c.case?'/wp_page_kUVmdDuz/'+c.case:'/mX5DfXca/teL1sPH3');
     q('#case-link').firstChild.textContent=c.case?'事例を見る ':'共創事例を見る ';
     q('#scene-note').textContent=c.note;q('#source-credit').textContent='映像：'+c.credit;q('#source-credit').href=c.source;
     q('#scene-announcement').textContent=c.label+'を表示しました';

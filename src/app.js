@@ -3,6 +3,8 @@
   const root=document.getElementById('pb-five');
   const q=s=>root.querySelector(s);
   const qa=s=>Array.from(root.querySelectorAll(s));
+  const siteOrigin=(root.dataset.siteOrigin||'https://playbox-dev.studio.site').replace(/\/+$/,'');
+  q('.research-link').href=siteOrigin+'/wp_categories_QHrK8YuM-1/tech-blog';
   const video=q('#source-video');
   const main=q('#main-model'),one=q('#apply-one-model'),two=q('#apply-two-model');
   const play=q('#play-toggle');
@@ -139,7 +141,7 @@
     q('#application-one-visual').classList.toggle('has-video',isVideo);q('#apply-source').hidden=!isVideo;one.toggleAttribute('hidden',isWork);two.toggleAttribute('hidden',isWork);
     q('.work-record').hidden=!isWork;q('.work-search').hidden=!isWork;
     q('#application-two-visual').setAttribute('role',isWork?'group':'img');
-    q('#case-link').href=c.case?'https://preview.studio.site/live/p6ao1LJmOR/wp_page_kUVmdDuz/'+c.case:'https://preview.studio.site/live/p6ao1LJmOR/mX5DfXca/teL1sPH3';
+    q('#case-link').href=siteOrigin+(c.case?'/wp_page_kUVmdDuz/'+c.case:'/mX5DfXca/teL1sPH3');
     q('#case-link').firstChild.textContent=c.case?'事例を見る ':'共創事例を見る ';
     q('#scene-note').textContent=c.note;q('#source-credit').textContent='映像：'+c.credit;q('#source-credit').href=c.source;
     q('#scene-announcement').textContent=c.label+'を表示しました';
