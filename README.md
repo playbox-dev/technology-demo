@@ -67,7 +67,8 @@ Website links use the `data-site-origin` setting on `#pb-five` in
 `src/index.html`, currently `https://playbox.co.jp`. Research and case
 links open the parent page through `target="_top"`; source credits still open a
 separate tab. Soccer links to the published MIXI case. The remaining scenes link
-to the Works index until their individual case pages are published.
+to the Works index until their individual case pages are published. Research links
+use `/technology`; case links use `/works/{slug}`, with `/works` as the index.
 
 To change the website origin, update `data-site-origin` and the two static links
 in `src/index.html`, plus the fallback in `src/app.js`, then rebuild. Keep the separate

@@ -57,7 +57,7 @@
   <main id="pb-five" class="technology" data-site-origin="https://playbox.co.jp">
     <header class="section-header">
       <div class="section-heading"><h1>Our Technology</h1><div class="dot-rule" aria-hidden="true"><span style="--dot-delay:0.2s"></span><span style="--dot-delay:1s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.4s"></span><span style="--dot-delay:0.7s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.5s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.6s"></span><span style="--dot-delay:0.7s"></span><span style="--dot-delay:0.6s"></span><span style="--dot-delay:0.4s"></span><span style="--dot-delay:0.6s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.6s"></span><span style="--dot-delay:1s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.4s"></span><span style="--dot-delay:0s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.4s"></span><span style="--dot-delay:0.7s"></span><span style="--dot-delay:1s"></span><span style="--dot-delay:0.5s"></span><span style="--dot-delay:0.7s"></span><span style="--dot-delay:0.7s"></span><span style="--dot-delay:1s"></span><span style="--dot-delay:0.7s"></span><span style="--dot-delay:0.5s"></span><span style="--dot-delay:0.5s"></span><span style="--dot-delay:1s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.5s"></span><span style="--dot-delay:0.8s"></span><span style="--dot-delay:0.8s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.8s"></span><span style="--dot-delay:0.7s"></span><span style="--dot-delay:0.5s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.2s"></span><span style="--dot-delay:0.8s"></span><span style="--dot-delay:0.5s"></span><span style="--dot-delay:0.4s"></span><span style="--dot-delay:0.5s"></span><span style="--dot-delay:0.9s"></span><span style="--dot-delay:0.7s"></span><span style="--dot-delay:0.9s"></span><span style="--dot-delay:0.5s"></span><span style="--dot-delay:0.4s"></span><span style="--dot-delay:0.9s"></span><span style="--dot-delay:0.7s"></span></div></div>
-      <a class="research-link" href="https://playbox.co.jp/wp_categories_QHrK8YuM-1/tech-blog" target="_top">技術・研究について <span aria-hidden="true">→</span></a>
+      <a class="research-link" href="https://playbox.co.jp/technology" target="_top">技術・研究について <span aria-hidden="true">→</span></a>
     </header>
 
     <nav class="scene-nav" aria-label="シーンを選ぶ">
@@ -106,7 +106,7 @@
             <div class="application-copy"><h3 id="apply-two-title">プレー分析</h3><p id="apply-two-copy">動きをたどり、プレーを振り返る。</p></div>
           </article>
         </div>
-        <div class="case-link-row"><a id="case-link" href="https://playbox.co.jp/wp_page_kUVmdDuz/mixigame-state-reconstruction" target="_top">事例を見る <span aria-hidden="true">→</span></a></div>
+        <div class="case-link-row"><a id="case-link" href="https://playbox.co.jp/works/mixigame-state-reconstruction" target="_top">事例を見る <span aria-hidden="true">→</span></a></div>
       </section>
     </section>
 
@@ -950,7 +950,7 @@ PB5Aligned.work = (() => {
   const q=s=>root.querySelector(s);
   const qa=s=>Array.from(root.querySelectorAll(s));
   const siteOrigin=(root.dataset.siteOrigin||'https://playbox.co.jp').replace(/\/+$/,'');
-  q('.research-link').href=siteOrigin+'/wp_categories_QHrK8YuM-1/tech-blog';
+  q('.research-link').href=siteOrigin+'/technology';
   const video=q('#source-video');
   const main=q('#main-model'),one=q('#apply-one-model'),two=q('#apply-two-model');
   const play=q('#play-toggle');
@@ -1087,7 +1087,7 @@ PB5Aligned.work = (() => {
     q('#application-one-visual').classList.toggle('has-video',isVideo);q('#apply-source').hidden=!isVideo;one.toggleAttribute('hidden',isWork);two.toggleAttribute('hidden',isWork);
     q('.work-record').hidden=!isWork;q('.work-search').hidden=!isWork;
     q('#application-two-visual').setAttribute('role',isWork?'group':'img');
-    q('#case-link').href=siteOrigin+(c.case?'/wp_page_kUVmdDuz/'+c.case:'/mX5DfXca/teL1sPH3');
+    q('#case-link').href=siteOrigin+(c.case?'/works/'+c.case:'/works');
     q('#case-link').firstChild.textContent=c.case?'事例を見る ':'共創事例を見る ';
     q('#scene-note').textContent=c.note;q('#source-credit').textContent='映像：'+c.credit;q('#source-credit').href=c.source;
     q('#scene-announcement').textContent=c.label+'を表示しました';
